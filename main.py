@@ -2,7 +2,7 @@
 import os
 import datetime
 
-from flask import Flask
+from flask import Flask, render_template, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
@@ -13,6 +13,7 @@ print "using basedir ", basedir
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(basedir,'data.sqlite')
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
+app.config['SECRET_KEY'] = 'hellothisismykeylalalala'
 db = SQLAlchemy(app)
 
 class Unit(db.Model):
@@ -35,7 +36,7 @@ class UnitForm(Form):
 def index():
 	return '<h1>Hello World</h1>'
 
-@app.route('/unit/', methods ['GET', 'POST'])
+@app.route('/unit/', methods = ['GET', 'POST'])
 def unit():
 	form  = UnitForm()
 	if form.validate_on_submit():
