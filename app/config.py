@@ -11,11 +11,11 @@ class DevelopmentConfig(Config):
 	DEBUG = True
 	SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir,'dev-data.sqllite')
 
-class TestingConfig(config):
+class TestingConfig(Config):
 	TESTING = True
 	SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir,'test-data.sqllite')
 
-class ProductionConfig(config):
+class ProductionConfig(Config):
 	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or "sqlite:///" + os.path.join(basedir, 'data.sqllite')
 
 config = {
