@@ -33,7 +33,7 @@ class Unit(db.Model):
 	votes = db.Column(db.Integer)
 
 	def __repr__(self):
-		return "entry %d %s:%s with %d votes" % (id, name, value, votes)
+		return "entry %d %s:%s with %d votes" % (self.id, self.name, self.value, self.votes)
 
 class UnitForm(Form):
 	name = StringField("What's your idea called?", validators=[Required()])
@@ -42,7 +42,7 @@ class UnitForm(Form):
 
 @app.route('/')
 def index():
-	return '<h1>Hello World</h1>'
+	return render_template('index.html')
 
 @app.route('/unit/', methods = ['GET', 'POST'])
 def unit():
