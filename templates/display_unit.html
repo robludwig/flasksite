@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+Name: {{unit.name}}<br>
+Idea: {{unit.value}}<br>
+Submitted: {{moment(unit.created).format('L')}}<br>
+Votes: {{unit.votes}}<br>
+{% endblock %}

@@ -12,8 +12,9 @@ from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
 
-#bootstrap
+#frontend
 from flask.ext.bootstrap import Bootstrap
+from flask.ext.moment import Moment
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 print "using basedir ", basedir
@@ -22,7 +23,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(basedir,'dat
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SECRET_KEY'] = 'hellothisismykeylalalala'
 db = SQLAlchemy(app)
-Bootstrap(app)
+bootstrap = Bootstrap(app)
+moment = Moment(app)
 
 class Unit(db.Model):
 	__tablename__ = 'units'
@@ -55,6 +57,13 @@ def unit():
 		return redirect(url_for('index'))
 	else:
 		return render_template('unit.html', form=form)
+
+@app.route('/unit/<id>')
+def getUnit(id):
+	unit = Unit.query.filter_by(id=id).first()
+	if not unit:
+		return redirect(url_for('index'))
+	return render_template('display_unit.html',unit=unit)
 	
 if __name__ == '__main__':
 	app.run(debug=True)
