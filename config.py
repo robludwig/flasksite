@@ -9,14 +9,14 @@ class Config:
 		pass
 class DevelopmentConfig(Config):
 	DEBUG = True
-	SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir,'dev-data.sqllite')
+	SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir,'dev-data.sqlite')
 
 class TestingConfig(Config):
 	TESTING = True
-	SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir,'test-data.sqllite')
+	SQLALCHEMY_DATABASE_URI = "sqlite:///" + os.path.join(basedir,'test-data.sqlite')
 
 class ProductionConfig(Config):
-	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or "sqlite:///" + os.path.join(basedir, 'data.sqllite')
+	SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or "sqlite:///" + os.path.join(basedir, 'data.sqlite')
 
 class HerokuConfig(ProductionConfig):
 	@classmethod

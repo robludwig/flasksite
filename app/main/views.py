@@ -1,16 +1,11 @@
-<<<<<<< HEAD
-from datetime import datetime
+import datetime
 from flask import render_template, session, redirect, url_for
 from . import main
 from .forms import UnitForm
 from .. import db
-=======
+from ..models import Unit
 import random
 
-from flask import Flask, render_template, url_for, redirect
-from . import main
-from .forms import UnitForm
-from ..models import Unit
 
 @main.route('/')
 def index():
@@ -24,7 +19,7 @@ def unit():
 		unit.created = datetime.datetime.now()
 		unit.votes = 0
 		db.session.add(unit)
-		return redirect(url_for('index'))
+		return redirect(url_for(index))
 	else:
 		return render_template('unit.html', form=form)
 
@@ -34,7 +29,7 @@ def getUnit(id):
 	print "getting unit %d" % int(id)
 	if not unit:
 		print "unit not found"
-		return redirect(url_for('index'))
+		return redirect(url_for(index))
 	return render_template('display_unit.html',unit=unit)
 
 @main.route('/unit/random/')
