@@ -3,10 +3,17 @@ import os
 import datetime
 
 from flask import Flask, render_template, url_for
+
+#sqlalch
 from flask.ext.sqlalchemy import SQLAlchemy
+
+#wtf
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
 from wtforms.validators import Required
+
+#bootstrap
+from flask.ext.bootstrap import Bootstrap
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 print "using basedir ", basedir
@@ -15,6 +22,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(basedir,'dat
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SECRET_KEY'] = 'hellothisismykeylalalala'
 db = SQLAlchemy(app)
+bootstrap = Bootstrap(app)
 
 class Unit(db.Model):
 	__tablename__ = 'units'
