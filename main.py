@@ -2,7 +2,7 @@
 import os
 import datetime
 
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect
 
 #sqlalch
 from flask.ext.sqlalchemy import SQLAlchemy
@@ -22,7 +22,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///" + os.path.join(basedir,'dat
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 app.config['SECRET_KEY'] = 'hellothisismykeylalalala'
 db = SQLAlchemy(app)
-bootstrap = Bootstrap(app)
+Bootstrap(app)
 
 class Unit(db.Model):
 	__tablename__ = 'units'
@@ -37,7 +37,7 @@ class Unit(db.Model):
 
 class UnitForm(Form):
 	name = StringField("What's your idea called?", validators=[Required()])
-	idea = StringField("What's short description of your idea?", validators=[Required()])
+	idea = StringField("What's a short description of your idea?", validators=[Required()])
 	submit = SubmitField('Submit')
 
 @app.route('/')
@@ -49,7 +49,7 @@ def unit():
 	form  = UnitForm()
 	if form.validate_on_submit():
 		unit = Unit(name=form.name.data, value = form.idea.data)
-		unit.created = datetime.now()
+		unit.created = datetime.datetime.now()
 		unit.votes = 0
 		db.session.add(unit)
 		return redirect(url_for('index'))
