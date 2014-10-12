@@ -44,7 +44,7 @@ class UnitForm(Form):
 def index():
 	return render_template('index.html')
 
-@app.route('/unit/', methods = ['GET', 'POST'])
+@app.route('/unit', methods = ['GET', 'POST'])
 def unit():
 	form  = UnitForm()
 	if form.validate_on_submit():
