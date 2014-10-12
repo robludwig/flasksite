@@ -1,2 +1,6 @@
 *.pyc
 *.sqlite
+bin/*
+include/*
+lib/*
+local/*
