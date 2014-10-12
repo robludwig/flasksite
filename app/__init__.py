@@ -4,8 +4,6 @@ from flask.ext.moment import Moment
 from flask.ext.sqlalchemy import SQLAlchemy
 from config import config
 
-main = Blueprint('main', __name__)
-from . import views, errors
 
 bootstrap = Bootstrap()
 moment = Moment()
