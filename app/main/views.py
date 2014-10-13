@@ -1,5 +1,5 @@
 import datetime
-from flask import render_template, session, redirect, url_for
+from flask import render_template, session, redirect, url_for, abort
 from . import main
 from .forms import UnitForm
 from .. import db
@@ -19,12 +19,13 @@ def unit():
 		unit.created = datetime.datetime.now()
 		unit.votes = 0
 		db.session.add(unit)
+		db.session.commit()
 		return redirect(url_for('main.index'))
 	else:
 		return render_template('unit.html', form=form)
 
 @main.route('/unit/<id>')
-def getUnit(id):
+def get_unit(id):
 	unit = Unit.query.filter_by(id=id).first()
 	print "getting unit %d" % int(id)
 	if not unit:
@@ -33,9 +34,28 @@ def getUnit(id):
 	return render_template('display_unit.html',unit=unit)
 
 @main.route('/unit/random/')
-def getRandomUnit():
+def random_unit():
 	unit_count = Unit.query.count()
 	random_id = random.randint(1, unit_count)
 	print "got random unit %d" % random_id
 	unit = Unit.query.filter_by(id=random_id).first()
 	return render_template('display_unit.html', unit=unit)
+
+@main.route('/unit/<id>/vote/')
+def vote_up(id):
+	unit = Unit.query.filter_by(id=id).first()
+	print "getting unit %d" % int(id)
+	if not unit:
+		print "unit not found"
+		abort(404)
+		return
+	print "current unit", unit
+	unit.votes += 1
+	db.session.add(unit)
+	db.session.commit()
+	return "unit upvoted"
+
+@main.route('/units/')
+def list_units():
+	units = Unit.query.all()
+	return render_template("list_units.html", units=units)
